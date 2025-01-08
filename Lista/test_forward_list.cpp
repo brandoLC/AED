@@ -41,6 +41,15 @@ void test_front() {
     std::cout << "test_front passed\n";
 }
 
+void test_back(){
+    ForwardList<int> list;
+    list.push_back(13);
+    assert(list.back() == 13);
+    list.push_back(9);
+    assert(list.back() == 9);
+    std::cout << "test_back passed\n";
+}
+
 void test_empty() {
     ForwardList<int> list;
     assert(list.empty());
@@ -62,6 +71,7 @@ int main() {
     test_push_front();
     test_push_back();
     test_pop_front();
+    test_back();
     test_front();
     test_empty();
     test_clear();

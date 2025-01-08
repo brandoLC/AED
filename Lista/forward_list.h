@@ -1,7 +1,7 @@
 #ifndef FORWARD_LIST_H
 #define FORWARD_LIST_H
 
-#include <stdexcept> // Añadir esta línea
+#include <stdexcept> 
 
 template <typename T>
 class ForwardList {
@@ -21,6 +21,7 @@ public:
     void push_back(const T& value);
     void pop_front();
     T& front();
+    T& back();
     bool empty() const;
     void clear();
 };
@@ -64,6 +65,18 @@ template <typename T>
 T& ForwardList<T>::front() {
     if (head) {
         return head->data;
+    }
+    throw std::out_of_range("List is empty");
+}
+
+template<typename T>
+T& ForwardList<T>::back() {
+    if (head) {
+        Node* it = head;
+        while (it->next != nullptr) {
+            it = it->next;
+        }
+        return it->data;
     }
     throw std::out_of_range("List is empty");
 }

@@ -1,0 +1,44 @@
+# Ignore the .vscode directory
+.vscode/
+
+# Ignore build directories
+/build/
+/bin/
+/obj/
+
+# Ignore compiled object files
+*.o
+*.obj
+
+# Ignore compiled dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Ignore compiled static libraries
+*.lib
+*.a
+
+# Ignore executable files
+*.exe
+*.out
+*.app
+
+# Ignore temporary files
+*.log
+*.tmp
+*.swp
+*.swo
+
+# Ignore backup files
+*.bak
+*.old
+*.orig
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore other IDE specific files
+.idea/
+*.iml
