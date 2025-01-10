@@ -2,7 +2,7 @@
 #define FORWARD_LIST_H
 
 #include <stdexcept> 
-
+#include <initializer_list>
 template <typename T>
 class ForwardList {
 private:
@@ -15,16 +15,24 @@ private:
 
 public:
     ForwardList() : head(nullptr) {}
+    ForwardList(std::initializer_list<T> init_list);
     ~ForwardList();
 
     void push_front(const T& value);
     void push_back(const T& value);
     void pop_front();
-    T& front();
-    T& back();
+    const T& front();
+    const T& back();
     bool empty() const;
     void clear();
 };
+
+template<typename T>
+ForwardList<T>::ForwardList(std::initializer_list<T> init_list):head(nullptr){
+    for(const T& value : init_list){
+        push_back(value);
+    }
+}
 
 template <typename T>
 ForwardList<T>::~ForwardList() {
@@ -62,21 +70,9 @@ void ForwardList<T>::pop_front() {
 }
 
 template <typename T>
-T& ForwardList<T>::front() {
+const T& ForwardList<T>::front() {
     if (head) {
         return head->data;
-    }
-    throw std::out_of_range("List is empty");
-}
-
-template<typename T>
-T& ForwardList<T>::back() {
-    if (head) {
-        Node* it = head;
-        while (it->next != nullptr) {
-            it = it->next;
-        }
-        return it->data;
     }
     throw std::out_of_range("List is empty");
 }
@@ -92,5 +88,20 @@ void ForwardList<T>::clear() {
         pop_front();
     }
 }
+
+template <typename T>
+const T& ForwardList<T>::back(){
+    if(!head){
+    throw std::out_of_range("List is empty");
+    }
+
+    Node* temp=head;
+
+    while(temp->next){
+        temp=temp->next;
+    }
+    return temp->data;
+}
+
 
 #endif // FORWARD_LIST_H
