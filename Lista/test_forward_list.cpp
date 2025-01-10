@@ -46,6 +46,24 @@ void test_pop_front() {
     std::cout << "test_pop_front passed\n";
 }
 
+void test_pop_back(){
+    ForwardList<int> list_empty;
+    ForwardList<int> list={1,2,3,4,5};
+
+    try{
+        list_empty.pop_back();
+        assert(false);
+    }catch(const std::out_of_range& e){
+        assert(true);
+    }
+
+    list.pop_back();
+    assert(list.back()==4);
+
+    std::cout<<"test_pop_back passed"<<std::endl;
+
+}
+
 void test_front() {
     ForwardList<int> list;
     list.push_front(1);
@@ -80,15 +98,61 @@ void test_clear() {
     std::cout << "test_clear passed\n";
 }
 
+void test_operator_brackets(){
+    ForwardList<int> list={1,2,3,4,5};
+
+    assert(list[0]==1);
+    assert(list[1]==2);
+    assert(list[2]==3);
+    assert(list[3]==4);
+    assert(list[4]==5);
+    
+    list[2]=10;
+    assert(list[2]==10);
+
+    list.pop_back();
+
+    try{
+        list[4];
+        assert(false);
+    }catch(const std::out_of_range& e){
+        assert(true);
+    }
+
+    std::cout<<"test_operator_brackets passed"<<std::endl;
+
+}
+void test_size() {
+    ForwardList<int> list = {1, 2, 3};
+    assert(list.size() == 3); 
+
+    list.push_front(0);
+    assert(list.size() == 4); 
+
+    list.pop_front();
+    assert(list.size() == 3); 
+
+    list.clear();
+    assert(list.size() == 0); 
+
+    // Prueba con un objeto constante
+    const ForwardList<int> const_list = {4, 5, 6};
+    assert(const_list.size() == 3); 
+    std::cout << "test_size passed\n";
+}
+
 int main() {
     test_initializer_list();
     test_push_front();
     test_push_back();
     test_pop_front();
+    test_pop_back();
     test_front();
     test_back();
     test_empty();
     test_clear();
+    test_size();
+    test_operator_brackets();
     std::cout << "All tests passed\n";
     return 0;
 }
