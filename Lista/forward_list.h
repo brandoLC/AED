@@ -29,6 +29,7 @@ public:
     bool empty() const;
     void clear();
     T& operator[](int index);
+    void reverse();
 };
 
 template<typename T>
@@ -154,5 +155,23 @@ T& ForwardList<T>::operator[](int index){
     return temp->data;
 
 }
+
+template <typename T>
+void ForwardList<T>::reverse(){
+    if (!head || !head->next) {
+        return; 
+    }
+    
+    Node* prev=nullptr;
+    Node* current=head;
+    while(current){
+        Node* next=current->next;
+        current->next=prev;
+        prev=current;
+        current=next;
+    }
+    head=prev;
+}
+
 
 #endif // FORWARD_LIST_H
