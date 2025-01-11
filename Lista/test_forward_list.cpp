@@ -165,6 +165,29 @@ void test_insertionSort() {
     std::cout << "test_insertionSort passed\n";
 }
 
+void test_mergeWith() {
+    ForwardList<int> list1 = {1, 3, 5};
+    ForwardList<int> list2 = {2, 4, 6};
+    ForwardList<int> mergedList = list1.mergeWith(list2);
+    assert(mergedList[0] == 1);
+    assert(mergedList[1] == 2);
+    assert(mergedList[2] == 3);
+    assert(mergedList[3] == 4);
+    assert(mergedList[4] == 5);
+    assert(mergedList[5] == 6);
+    std::cout << "test_mergeWith passed\n";
+}
+
+void test_intersectionWith() {
+    ForwardList<int> list1 = {1, 2, 3, 4, 5};
+    ForwardList<int> list2 = {3, 4, 5, 6, 7};
+    ForwardList<int> intersectionList = list1.intersectionWith(list2);
+    assert(intersectionList[0] == 3);
+    assert(intersectionList[1] == 4);
+    assert(intersectionList[2] == 5);
+    std::cout << "test_intersectionWith passed\n";
+}
+
 int main() {
     test_initializer_list();
     test_push_front();
@@ -179,6 +202,8 @@ int main() {
     test_operator_brackets();
     test_reverse();
     test_insertionSort();
+    test_intersectionWith();
+    test_mergeWith();
     std::cout << "All tests passed\n";
     return 0;
 }

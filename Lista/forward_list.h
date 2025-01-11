@@ -33,6 +33,8 @@ public:
     T& operator[](int index);
     void reverse();
     void insertionSort();
+    ForwardList<T> mergeWith(const ForwardList<T>& other) const; 
+    ForwardList<T> intersectionWith(const ForwardList<T>& other) const;
 };
 
 template<typename T>
@@ -211,5 +213,60 @@ void ForwardList<T>::insertionSort(){
     head = sorted;
 }
 
+template <typename T>
+ForwardList<T> ForwardList<T>::intersectionWith(const ForwardList<T>& other) const {
+    ForwardList<T> result;
+    Node* current1 = head;
+    Node* current2 = other.head;
+    Node** lastPtrRef = &result.head;
+
+    while (current1 && current2) {
+        if (current1->data < current2->data) {
+            current1 = current1->next;
+        } else if (current1->data > current2->data) {
+            current2 = current2->next;
+        } else {
+            *lastPtrRef = new Node(current1->data);
+            lastPtrRef = &((*lastPtrRef)->next);
+            current1 = current1->next;
+            current2 = current2->next;
+        }
+    }
+
+    return result;
+}
+
+template <typename T>
+ForwardList<T> ForwardList<T>::mergeWith(const ForwardList<T>& other) const {
+    ForwardList<T> result;
+    Node* current1 = head;
+    Node* current2 = other.head;
+    Node** lastPtrRef = &result.head;
+
+    while (current1 && current2) {
+        if (current1->data <= current2->data) {
+            *lastPtrRef = new Node(current1->data);
+            current1 = current1->next;
+        } else {
+            *lastPtrRef = new Node(current2->data);
+            current2 = current2->next;
+        }
+        lastPtrRef = &((*lastPtrRef)->next);
+    }
+
+    while (current1) {
+        *lastPtrRef = new Node(current1->data);
+        current1 = current1->next;
+        lastPtrRef = &((*lastPtrRef)->next);
+    }
+
+    while (current2) {
+        *lastPtrRef = new Node(current2->data);
+        current2 = current2->next;
+        lastPtrRef = &((*lastPtrRef)->next);
+    }
+
+    return result;
+}
 
 #endif // FORWARD_LIST_H
