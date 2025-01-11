@@ -14,6 +14,8 @@ private:
     };
     Node* head;
 
+    typename ForwardList<T>::Node* sortedInsert(typename ForwardList<T>::Node* sorted, typename ForwardList<T>::Node* newNode);
+
 public:
     ForwardList() : head(nullptr) {}
     ForwardList(std::initializer_list<T> init_list);
@@ -30,6 +32,7 @@ public:
     void clear();
     T& operator[](int index);
     void reverse();
+    void insertionSort();
 };
 
 template<typename T>
@@ -171,6 +174,41 @@ void ForwardList<T>::reverse(){
         current=next;
     }
     head=prev;
+}
+
+template <typename T>
+typename ForwardList<T>::Node* ForwardList<T>::sortedInsert(Node* sorted,Node* newNode){
+    
+    if(!sorted || sorted->data>=newNode->data){
+        newNode->next=sorted;
+        return newNode;
+    }else{
+        Node* current=sorted;
+        while(current->next && current->next->data < newNode->data){
+            current=current->next;
+        }
+        newNode->next=current->next;
+        current->next=newNode;
+    }
+    return sorted;
+}
+
+template <typename T>
+void ForwardList<T>::insertionSort(){
+    if(!head || !head->next){
+        return;
+    }
+
+    Node* sorted = nullptr;
+    Node* current = head;
+
+    while (current) {
+        Node* next = current->next;
+        sorted = sortedInsert(sorted, current);
+        current = next;
+    }
+
+    head = sorted;
 }
 
 

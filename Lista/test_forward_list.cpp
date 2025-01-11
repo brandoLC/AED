@@ -154,6 +154,17 @@ void test_reverse() {
     std::cout << "test_reverse passed\n";
 }
 
+void test_insertionSort() {
+    ForwardList<int> list = {5, 2, 4, 3, 1};
+    list.insertionSort();
+    assert(list[0] == 1);
+    assert(list[1] == 2);
+    assert(list[2] == 3);
+    assert(list[3] == 4);
+    assert(list[4] == 5);
+    std::cout << "test_insertionSort passed\n";
+}
+
 int main() {
     test_initializer_list();
     test_push_front();
@@ -167,6 +178,7 @@ int main() {
     test_size();
     test_operator_brackets();
     test_reverse();
+    test_insertionSort();
     std::cout << "All tests passed\n";
     return 0;
 }
