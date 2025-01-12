@@ -215,7 +215,6 @@ TEST(ForwardListTest, IsPalindromo) {
     EXPECT_EQ(list5[0], 1);
 }
 
-// Función main para ejecutar todas las pruebas
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
