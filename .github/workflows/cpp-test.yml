@@ -26,4 +26,4 @@ jobs:
         cd build
         cmake ..
         make
-        ./runTests
+        ctest --output-on-failure
