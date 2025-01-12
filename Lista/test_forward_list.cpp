@@ -118,8 +118,6 @@ TEST(ForwardListTest, OperatorBracketsConst) {
 
     EXPECT_THROW(constList[5], std::out_of_range);
 
-    // Intentar modificar un objeto const debería fallar en tiempo de compilación
-    // constList[2] = 10; // Esto debería causar un error de compilación
 }
 
 // Prueba para size
