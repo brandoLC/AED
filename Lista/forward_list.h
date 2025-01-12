@@ -35,10 +35,32 @@ public:
     void reverse();
     void insertionSort();
     bool isPalindromo();
+    void remove(int index);
+    void insert(int index,T value);
     ForwardList<T> mergeWith(const ForwardList<T>& other) const; 
     ForwardList<T> intersectionWith(const ForwardList<T>& other) const;
 };
 
+
+template<typename T>
+void ForwardList<T>::remove(int index){
+    if(index<0 || index>=size()) throw std::out_of_range("index is out of range");
+
+    Node* prev=nullptr;
+    Node* current=head;
+    for (int i = 0; i < index; ++i){
+        prev=current;
+        current=current->next;
+    }
+
+    if(prev==nullptr){
+        head=current->next;
+    }else{
+        prev->next=current->next;
+    }
+
+    delete current;
+}
 template<typename T>
 ForwardList<T>::ForwardList(std::initializer_list<T> init_list):head(nullptr){
     for(const T& value : init_list){
@@ -346,5 +368,26 @@ bool ForwardList<T>::isPalindromo() {
     mid->next = prev;
 
     return true;
+}
+
+template<typename T>
+void ForwardList<T>::insert(int index,T value){
+    if(index<0 || index > size()) throw std::out_of_range("index is out of range");
+
+
+    if(index==0){
+        push_front(value);
+    }else if(index==size()){
+        push_back(value);
+    }else{
+        Node* newNode=new Node(value);
+        Node* current=head;
+        for(int i=0 ; i<index-1; ++i){
+            current=current->next;
+        }
+        newNode->next=current->next;
+        current->next=newNode;
+    }
+
 }
 #endif // FORWARD_LIST_H

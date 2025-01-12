@@ -215,6 +215,75 @@ TEST(ForwardListTest, IsPalindromo) {
     EXPECT_EQ(list5[0], 1);
 }
 
+// Prueba para el método remove
+TEST(ForwardListTest, Remove) {
+    ForwardList<int> list = {1, 2, 3, 4, 5};
+
+    // Eliminar el primer elemento
+    list.remove(0);
+    EXPECT_EQ(list.size(), 4);
+    EXPECT_EQ(list[0], 2);
+    EXPECT_EQ(list[1], 3);
+    EXPECT_EQ(list[2], 4);
+    EXPECT_EQ(list[3], 5);
+
+    // Eliminar un elemento en el medio
+    list.remove(1);
+    EXPECT_EQ(list.size(), 3);
+    EXPECT_EQ(list[0], 2);
+    EXPECT_EQ(list[1], 4);
+    EXPECT_EQ(list[2], 5);
+
+    // Eliminar el último elemento
+    list.remove(2);
+    EXPECT_EQ(list.size(), 2);
+    EXPECT_EQ(list[0], 2);
+    EXPECT_EQ(list[1], 4);
+
+    // Eliminar el único elemento restante
+    list.remove(0);
+    list.remove(0);
+    EXPECT_TRUE(list.empty());
+}
+
+TEST(ForwardListTest,Insert){
+    ForwardList<int> list = {1,2,3,4,5};
+
+    //Insertando un nodo al inicio parecido al push_front
+    list.insert(0,99);
+    EXPECT_EQ(list.size(),6);
+    EXPECT_EQ(list[0],99);
+    EXPECT_EQ(list[1],1);
+    EXPECT_EQ(list[2],2);
+    EXPECT_EQ(list[3],3);
+    EXPECT_EQ(list[4],4);
+    EXPECT_EQ(list[5],5);
+
+    // Insertar en el medio
+    list.insert(3, 88);
+    EXPECT_EQ(list.size(), 7);
+    EXPECT_EQ(list[0], 99);
+    EXPECT_EQ(list[1], 1);
+    EXPECT_EQ(list[2], 2);
+    EXPECT_EQ(list[3], 88);
+    EXPECT_EQ(list[4], 3);
+    EXPECT_EQ(list[5], 4);
+    EXPECT_EQ(list[6], 5);
+
+    // Insertar al final
+    list.insert(list.size(), 77);
+    EXPECT_EQ(list.size(), 8);
+    EXPECT_EQ(list[0], 99);
+    EXPECT_EQ(list[1], 1);
+    EXPECT_EQ(list[2], 2);
+    EXPECT_EQ(list[3], 88);
+    EXPECT_EQ(list[4], 3);
+    EXPECT_EQ(list[5], 4);
+    EXPECT_EQ(list[6], 5);
+    EXPECT_EQ(list[7], 77);
+
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
