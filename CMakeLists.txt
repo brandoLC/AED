@@ -3,9 +3,12 @@ project(AED)
 
 set(CMAKE_CXX_STANDARD 11)
 
+enable_testing()
+
 # Añade tus archivos fuente aquí
 add_executable(runTests Lista/test_forward_list.cpp)
 
 # Linkea Google Test
 find_package(GTest REQUIRED)
-target_link_libraries(runTests GTest::GTest GTest::Main)
+include(GoogleTest)
+gtest_discover_tests(runTests)
