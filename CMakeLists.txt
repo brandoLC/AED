@@ -4,7 +4,7 @@ project(AED)
 set(CMAKE_CXX_STANDARD 11)
 
 # Añade tus archivos fuente aquí
-add_executable(runTests lista/test_forward_list.cpp)
+add_executable(runTests Lista/test_forward_list.cpp)
 
 # Linkea Google Test
 find_package(GTest REQUIRED)
