@@ -98,30 +98,47 @@ void test_clear() {
     std::cout << "test_clear passed\n";
 }
 
-void test_operator_brackets(){
-    ForwardList<int> list={1,2,3,4,5};
+void test_operator_brackets() {
+    ForwardList<int> list = {1, 2, 3, 4, 5};
 
-    assert(list[0]==1);
-    assert(list[1]==2);
-    assert(list[2]==3);
-    assert(list[3]==4);
-    assert(list[4]==5);
-    
-    list[2]=10;
-    assert(list[2]==10);
+    // Pruebas para objetos no const
+    assert(list[0] == 1);
+    assert(list[1] == 2);
+    assert(list[2] == 3);
+    assert(list[3] == 4);
+    assert(list[4] == 5);
+
+    list[2] = 10;
+    assert(list[2] == 10);
 
     list.pop_back();
 
-    try{
+    try {
         list[4];
         assert(false);
-    }catch(const std::out_of_range& e){
+    } catch (const std::out_of_range& e) {
         assert(true);
     }
 
-    std::cout<<"test_operator_brackets passed"<<std::endl;
+    // Pruebas para objetos const
+    const ForwardList<int> constList = {1, 2, 3, 4, 5};
 
+    assert(constList[0] == 1);
+    assert(constList[1] == 2);
+    assert(constList[2] == 3);
+    assert(constList[3] == 4);
+    assert(constList[4] == 5);
+
+    try {
+        constList[5]; // Acceso fuera de rango en un objeto const
+        assert(false);
+    } catch (const std::out_of_range& e) {
+        assert(true);
+    }
+
+    std::cout << "test_operator_brackets passed" << std::endl;
 }
+
 void test_size() {
     ForwardList<int> list = {1, 2, 3};
     assert(list.size() == 3); 

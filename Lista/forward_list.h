@@ -31,6 +31,7 @@ public:
     bool empty() const;
     void clear();
     T& operator[](int index);
+    const T& operator[](int index) const;
     void reverse();
     void insertionSort();
     bool isPalindromo();
@@ -160,6 +161,21 @@ T& ForwardList<T>::operator[](int index){
 
     return temp->data;
 
+}
+
+template<typename T>
+const T& ForwardList<T>::operator[](int index) const {
+    Node* current = head;
+    for (int i = 0; i < index; ++i) {
+        if (!current) {
+            throw std::out_of_range("Index is out of range");
+        }
+        current = current->next;
+    }
+    if (!current) {
+        throw std::out_of_range("Index is out of range");
+    }
+    return current->data;
 }
 
 template <typename T>
