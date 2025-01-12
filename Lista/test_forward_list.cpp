@@ -1,265 +1,224 @@
 #include "forward_list.h"
-#include <iostream>
-#include <cassert>
+#include <gtest/gtest.h>
 
+// Prueba para el inicializador de lista
+TEST(ForwardListTest, InitializerList) {
+    mylib::ForwardList<int> list = {1, 2, 3, 4, 5};
 
-void test_initializer_list() {
-    ForwardList<int> list = {1, 2, 3, 4, 5};
-
-    assert(list.front() == 1);
-    assert(list.back() == 5);
+    EXPECT_EQ(list.front(), 1);
+    EXPECT_EQ(list.back(), 5);
 
     list.pop_front();
-    assert(list.front() == 2);
-
-    std::cout << "test_initializer_list passed\n";
+    EXPECT_EQ(list.front(), 2);
 }
 
-
-void test_push_front() {
-    ForwardList<int> list;
+// Prueba para push_front
+TEST(ForwardListTest, PushFront) {
+    mylib::ForwardList<int> list;
     list.push_front(1);
-    assert(list.front() == 1);
+    EXPECT_EQ(list.front(), 1);
     list.push_front(2);
-    assert(list.front() == 2);
-    std::cout << "test_push_front passed\n";
+    EXPECT_EQ(list.front(), 2);
 }
 
-void test_push_back() {
-    ForwardList<int> list;
+// Prueba para push_back
+TEST(ForwardListTest, PushBack) {
+    mylib::ForwardList<int> list;
     list.push_back(1);
-    assert(list.front() == 1);
+    EXPECT_EQ(list.front(), 1);
     list.push_back(2);
+    EXPECT_EQ(list.back(), 2);
     list.pop_front();
-    assert(list.front() == 2);
-    std::cout << "test_push_back passed\n";
+    EXPECT_EQ(list.front(), 2);
 }
 
-void test_pop_front() {
-    ForwardList<int> list;
+// Prueba para pop_front
+TEST(ForwardListTest, PopFront) {
+    mylib::ForwardList<int> list;
     list.push_front(1);
     list.push_front(2);
     list.pop_front();
-    assert(list.front() == 1);
+    EXPECT_EQ(list.front(), 1);
     list.pop_front();
-    assert(list.empty());
-    std::cout << "test_pop_front passed\n";
+    EXPECT_TRUE(list.empty());
 }
 
-void test_pop_back(){
-    ForwardList<int> list_empty;
-    ForwardList<int> list={1,2,3,4,5};
+// Prueba para pop_back
+TEST(ForwardListTest, PopBack) {
+    mylib::ForwardList<int> list_empty;
+    mylib::ForwardList<int> list = {1, 2, 3, 4, 5};
 
-    try{
-        list_empty.pop_back();
-        assert(false);
-    }catch(const std::out_of_range& e){
-        assert(true);
-    }
+    EXPECT_THROW(list_empty.pop_back(), std::out_of_range);
 
     list.pop_back();
-    assert(list.back()==4);
-
-    std::cout<<"test_pop_back passed"<<std::endl;
-
+    EXPECT_EQ(list.back(), 4);
 }
 
-void test_front() {
-    ForwardList<int> list;
+// Prueba para front
+TEST(ForwardListTest, Front) {
+    mylib::ForwardList<int> list;
     list.push_front(1);
-    assert(list.front() == 1);
+    EXPECT_EQ(list.front(), 1);
     list.push_front(2);
-    assert(list.front() == 2);
-    std::cout << "test_front passed\n";
+    EXPECT_EQ(list.front(), 2);
 }
 
-void test_back() {
-    ForwardList<int> list={1,3,5,2,4};
-    assert(list.back()==4);
+// Prueba para back
+TEST(ForwardListTest, Back) {
+    mylib::ForwardList<int> list = {1, 3, 5, 2, 4};
+    EXPECT_EQ(list.back(), 4);
     list.push_back(5);
-    assert(list.back()==5);
-    std::cout << "test_back passed"<<std::endl;
+    EXPECT_EQ(list.back(), 5);
 }
 
-void test_empty() {
-    ForwardList<int> list;
-    assert(list.empty());
+// Prueba para empty
+TEST(ForwardListTest, Empty) {
+    mylib::ForwardList<int> list;
+    EXPECT_TRUE(list.empty());
     list.push_front(1);
-    assert(!list.empty());
-    std::cout << "test_empty passed\n";
+    EXPECT_FALSE(list.empty());
 }
 
-void test_clear() {
-    ForwardList<int> list;
+// Prueba para clear
+TEST(ForwardListTest, Clear) {
+    mylib::ForwardList<int> list;
     list.push_front(1);
     list.push_front(2);
     list.clear();
-    assert(list.empty());
-    std::cout << "test_clear passed\n";
+    EXPECT_TRUE(list.empty());
 }
 
-void test_operator_brackets() {
-    ForwardList<int> list = {1, 2, 3, 4, 5};
+// Prueba para el operador []
+TEST(ForwardListTest, OperatorBracketsNonConst) {
+    mylib::ForwardList<int> list = {1, 2, 3, 4, 5};
 
-    // Pruebas para objetos no const
-    assert(list[0] == 1);
-    assert(list[1] == 2);
-    assert(list[2] == 3);
-    assert(list[3] == 4);
-    assert(list[4] == 5);
+    EXPECT_EQ(list[0], 1);
+    EXPECT_EQ(list[1], 2);
+    EXPECT_EQ(list[2], 3);
+    EXPECT_EQ(list[3], 4);
+    EXPECT_EQ(list[4], 5);
 
     list[2] = 10;
-    assert(list[2] == 10);
+    EXPECT_EQ(list[2], 10);
 
     list.pop_back();
 
-    try {
-        list[4];
-        assert(false);
-    } catch (const std::out_of_range& e) {
-        assert(true);
-    }
-
-    // Pruebas para objetos const
-    const ForwardList<int> constList = {1, 2, 3, 4, 5};
-
-    assert(constList[0] == 1);
-    assert(constList[1] == 2);
-    assert(constList[2] == 3);
-    assert(constList[3] == 4);
-    assert(constList[4] == 5);
-
-    try {
-        constList[5]; // Acceso fuera de rango en un objeto const
-        assert(false);
-    } catch (const std::out_of_range& e) {
-        assert(true);
-    }
-
-    std::cout << "test_operator_brackets passed" << std::endl;
+    EXPECT_THROW(list[4], std::out_of_range);
 }
 
-void test_size() {
-    ForwardList<int> list = {1, 2, 3};
-    assert(list.size() == 3); 
+// Prueba para el operador [] en objetos const
+TEST(ForwardListTest, OperatorBracketsConst) {
+    const mylib::ForwardList<int> constList = {1, 2, 3, 4, 5};
+
+    EXPECT_EQ(constList[0], 1);
+    EXPECT_EQ(constList[1], 2);
+    EXPECT_EQ(constList[2], 3);
+    EXPECT_EQ(constList[3], 4);
+    EXPECT_EQ(constList[4], 5);
+
+    EXPECT_THROW(constList[5], std::out_of_range);
+
+    // Intentar modificar un objeto const debería fallar en tiempo de compilación
+    // constList[2] = 10; // Esto debería causar un error de compilación
+}
+
+// Prueba para size
+TEST(ForwardListTest, Size) {
+    mylib::ForwardList<int> list = {1, 2, 3};
+    EXPECT_EQ(list.size(), 3);
 
     list.push_front(0);
-    assert(list.size() == 4); 
+    EXPECT_EQ(list.size(), 4);
 
     list.pop_front();
-    assert(list.size() == 3); 
+    EXPECT_EQ(list.size(), 3);
 
     list.clear();
-    assert(list.size() == 0); 
+    EXPECT_EQ(list.size(), 0);
 
     // Prueba con un objeto constante
-    const ForwardList<int> const_list = {4, 5, 6};
-    assert(const_list.size() == 3); 
-    std::cout << "test_size passed\n";
+    const mylib::ForwardList<int> const_list = {4, 5, 6};
+    EXPECT_EQ(const_list.size(), 3);
 }
 
-void test_reverse() {
-
-    ForwardList<int> list = {1, 2, 3, 4, 5};
+// Prueba para reverse
+TEST(ForwardListTest, Reverse) {
+    mylib::ForwardList<int> list = {1, 2, 3, 4, 5};
     list.reverse();
-    assert(list[0] == 5);
-    assert(list[1] == 4);
-    assert(list[2] == 3);
-    assert(list[3] == 2);
-    assert(list[4] == 1);
-
-    std::cout << "test_reverse passed\n";
+    EXPECT_EQ(list[0], 5);
+    EXPECT_EQ(list[1], 4);
+    EXPECT_EQ(list[2], 3);
+    EXPECT_EQ(list[3], 2);
+    EXPECT_EQ(list[4], 1);
 }
 
-void test_insertionSort() {
-    ForwardList<int> list = {5, 2, 4, 3, 1};
+// Prueba para insertionSort
+TEST(ForwardListTest, InsertionSort) {
+    mylib::ForwardList<int> list = {5, 2, 4, 3, 1};
     list.insertionSort();
-    assert(list[0] == 1);
-    assert(list[1] == 2);
-    assert(list[2] == 3);
-    assert(list[3] == 4);
-    assert(list[4] == 5);
-    std::cout << "test_insertionSort passed\n";
+    EXPECT_EQ(list[0], 1);
+    EXPECT_EQ(list[1], 2);
+    EXPECT_EQ(list[2], 3);
+    EXPECT_EQ(list[3], 4);
+    EXPECT_EQ(list[4], 5);
 }
 
-void test_mergeWith() {
-    ForwardList<int> list1 = {1, 3, 5};
-    ForwardList<int> list2 = {2, 4, 6};
-    ForwardList<int> mergedList = list1.mergeWith(list2);
-    assert(mergedList[0] == 1);
-    assert(mergedList[1] == 2);
-    assert(mergedList[2] == 3);
-    assert(mergedList[3] == 4);
-    assert(mergedList[4] == 5);
-    assert(mergedList[5] == 6);
-    std::cout << "test_mergeWith passed\n";
+// Prueba para mergeWith
+TEST(ForwardListTest, MergeWith) {
+    mylib::ForwardList<int> list1 = {1, 3, 5};
+    mylib::ForwardList<int> list2 = {2, 4, 6};
+    mylib::ForwardList<int> mergedList = list1.mergeWith(list2);
+    EXPECT_EQ(mergedList[0], 1);
+    EXPECT_EQ(mergedList[1], 2);
+    EXPECT_EQ(mergedList[2], 3);
+    EXPECT_EQ(mergedList[3], 4);
+    EXPECT_EQ(mergedList[4], 5);
+    EXPECT_EQ(mergedList[5], 6);
 }
 
-void test_intersectionWith() {
-    ForwardList<int> list1 = {1, 2, 3, 4, 5};
-    ForwardList<int> list2 = {3, 4, 5, 6, 7};
-    ForwardList<int> intersectionList = list1.intersectionWith(list2);
-    assert(intersectionList[0] == 3);
-    assert(intersectionList[1] == 4);
-    assert(intersectionList[2] == 5);
-    std::cout << "test_intersectionWith passed\n";
+// Prueba para intersectionWith
+TEST(ForwardListTest, IntersectionWith) {
+    mylib::ForwardList<int> list1 = {1, 2, 3, 4, 5};
+    mylib::ForwardList<int> list2 = {3, 4, 5, 6, 7};
+    mylib::ForwardList<int> intersectionList = list1.intersectionWith(list2);
+    EXPECT_EQ(intersectionList[0], 3);
+    EXPECT_EQ(intersectionList[1], 4);
+    EXPECT_EQ(intersectionList[2], 5);
 }
 
-void test_isPalindromo() {
-    try {
-        ForwardList<int> list1 = {1, 2, 3, 2, 1};
-        assert(list1.isPalindromo() == true);
-        assert(list1[0] == 1);
-        assert(list1[1] == 2);
-        assert(list1[2] == 3);
-        assert(list1[3] == 2);
-        assert(list1[4] == 1);
+// Prueba para isPalindromo
+TEST(ForwardListTest, IsPalindromo) {
+    mylib::ForwardList<int> list1 = {1, 2, 3, 2, 1};
+    EXPECT_TRUE(list1.isPalindromo());
+    EXPECT_EQ(list1[0], 1);
+    EXPECT_EQ(list1[1], 2);
+    EXPECT_EQ(list1[2], 3);
+    EXPECT_EQ(list1[3], 2);
+    EXPECT_EQ(list1[4], 1);
 
-        ForwardList<int> list2 = {1, 2, 2, 1};
-        assert(list2.isPalindromo() == true);
-        assert(list2[0] == 1);
-        assert(list2[1] == 2);
-        assert(list2[2] == 2);
-        assert(list2[3] == 1);
+    mylib::ForwardList<int> list2 = {1, 2, 2, 1};
+    EXPECT_TRUE(list2.isPalindromo());
+    EXPECT_EQ(list2[0], 1);
+    EXPECT_EQ(list2[1], 2);
+    EXPECT_EQ(list2[2], 2);
+    EXPECT_EQ(list2[3], 1);
 
-        ForwardList<int> list3 = {1, 2, 3};
-        assert(list3.isPalindromo() == false);
-        assert(list3[0] == 1);
-        assert(list3[1] == 2);
-        assert(list3[2] == 3);
+    mylib::ForwardList<int> list3 = {1, 2, 3};
+    EXPECT_FALSE(list3.isPalindromo());
+    EXPECT_EQ(list3[0], 1);
+    EXPECT_EQ(list3[1], 2);
+    EXPECT_EQ(list3[2], 3);
 
-        ForwardList<int> list4;
-        assert(list4.isPalindromo() == true);
+    mylib::ForwardList<int> list4;
+    EXPECT_TRUE(list4.isPalindromo());
 
-        ForwardList<int> list5 = {1};
-        assert(list5.isPalindromo() == true);
-        assert(list5[0] == 1);
-
-        std::cout << "test_isPalindromo passed\n";
-    } catch (const std::out_of_range& e) {
-        std::cerr << "Out of range error: " << e.what() << '\n';
-    } catch (const std::exception& e) {
-        std::cerr << "Exception: " << e.what() << '\n';
-    }
+    mylib::ForwardList<int> list5 = {1};
+    EXPECT_TRUE(list5.isPalindromo());
+    EXPECT_EQ(list5[0], 1);
 }
 
-int main() {
-    test_initializer_list();
-    test_push_front();
-    test_push_back();
-    test_pop_front();
-    test_pop_back();
-    test_front();
-    test_back();
-    test_empty();
-    test_clear();
-    test_size();
-    test_operator_brackets();
-    test_reverse();
-    test_insertionSort();
-    test_intersectionWith();
-    test_mergeWith();
-    test_isPalindromo();
-    std::cout << "All tests passed\n";
-    return 0;
+// Función main para ejecutar todas las pruebas
+int main(int argc, char **argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }

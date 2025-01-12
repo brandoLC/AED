@@ -181,7 +181,7 @@ const T& ForwardList<T>::operator[](int index) const {
 template <typename T>
 void ForwardList<T>::reverse(){
     if (!head || !head->next) {
-        return; 
+        return;  
     }
     
     Node* prev=nullptr;
