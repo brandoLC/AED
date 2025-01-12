@@ -188,6 +188,44 @@ void test_intersectionWith() {
     std::cout << "test_intersectionWith passed\n";
 }
 
+void test_isPalindromo() {
+    try {
+        ForwardList<int> list1 = {1, 2, 3, 2, 1};
+        assert(list1.isPalindromo() == true);
+        assert(list1[0] == 1);
+        assert(list1[1] == 2);
+        assert(list1[2] == 3);
+        assert(list1[3] == 2);
+        assert(list1[4] == 1);
+
+        ForwardList<int> list2 = {1, 2, 2, 1};
+        assert(list2.isPalindromo() == true);
+        assert(list2[0] == 1);
+        assert(list2[1] == 2);
+        assert(list2[2] == 2);
+        assert(list2[3] == 1);
+
+        ForwardList<int> list3 = {1, 2, 3};
+        assert(list3.isPalindromo() == false);
+        assert(list3[0] == 1);
+        assert(list3[1] == 2);
+        assert(list3[2] == 3);
+
+        ForwardList<int> list4;
+        assert(list4.isPalindromo() == true);
+
+        ForwardList<int> list5 = {1};
+        assert(list5.isPalindromo() == true);
+        assert(list5[0] == 1);
+
+        std::cout << "test_isPalindromo passed\n";
+    } catch (const std::out_of_range& e) {
+        std::cerr << "Out of range error: " << e.what() << '\n';
+    } catch (const std::exception& e) {
+        std::cerr << "Exception: " << e.what() << '\n';
+    }
+}
+
 int main() {
     test_initializer_list();
     test_push_front();
@@ -204,6 +242,7 @@ int main() {
     test_insertionSort();
     test_intersectionWith();
     test_mergeWith();
+    test_isPalindromo();
     std::cout << "All tests passed\n";
     return 0;
 }

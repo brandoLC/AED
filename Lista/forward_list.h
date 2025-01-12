@@ -33,6 +33,7 @@ public:
     T& operator[](int index);
     void reverse();
     void insertionSort();
+    bool isPalindromo();
     ForwardList<T> mergeWith(const ForwardList<T>& other) const; 
     ForwardList<T> intersectionWith(const ForwardList<T>& other) const;
 };
@@ -269,4 +270,65 @@ ForwardList<T> ForwardList<T>::mergeWith(const ForwardList<T>& other) const {
     return result;
 }
 
+template<typename T>
+bool ForwardList<T>::isPalindromo() {
+    if (!head || !head->next) return true;
+
+    Node* slow = head;
+    Node* fast = head;
+
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    Node* prev = nullptr;
+    Node* curr = slow;
+    while (curr) {
+        Node* next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+
+    Node* left = head;
+    Node* ride = prev;
+    while (ride) {
+        if (left->data != ride->data) {
+            curr = prev;
+            prev = nullptr;
+            while (curr) {
+                Node* next = curr->next;
+                curr->next = prev;
+                prev = curr;
+                curr = next;
+            }
+            Node* mid = head;
+            while (mid->next != slow) {
+                mid = mid->next;
+            }
+            mid->next = prev;
+            return false;
+        }
+        left = left->next;
+        ride = ride->next;
+    }
+
+    curr = prev;
+    prev = nullptr;
+    while (curr) {
+        Node* next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+
+    Node* mid = head;
+    while (mid->next != slow) {
+        mid = mid->next;
+    }
+    mid->next = prev;
+
+    return true;
+}
 #endif // FORWARD_LIST_H
