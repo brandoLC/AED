@@ -6,20 +6,22 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 enable_testing()
 
-# Añade los directorios de inclusión
+# Add include directories
 include_directories(include)
 
-# Añade los archivos fuente
-add_executable(runTests
-        Lista/test_forward_list.cpp
-        Lista/test_DLinkedList.cpp)
+# Add source files for each test
+add_executable(test_DLinkedList Lista/test_DLinkedList.cpp)
+add_executable(test_ForwardList Lista/test_forward_list.cpp)
 
-# Encuentra Google Test
+# Find Google Test
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
-# Vincula Google Test y pthread
-target_link_libraries(runTests GTest::gtest GTest::gtest_main pthread)
+# Link Google Test and pthread
+target_link_libraries(test_DLinkedList GTest::gtest GTest::gtest_main pthread)
+target_link_libraries(test_ForwardList GTest::gtest GTest::gtest_main pthread)
 
+# Include GoogleTest
 include(GoogleTest)
-gtest_discover_tests(runTests)
+gtest_discover_tests(test_DLinkedList)
+gtest_discover_tests(test_ForwardList)
