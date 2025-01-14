@@ -10,14 +10,16 @@ enable_testing()
 include_directories(include)
 
 # Añade los archivos fuente
-add_executable(runTests Lista/test_forward_list.cpp)
+add_executable(runTests
+        Lista/test_forward_list.cpp
+        Lista/test_DLinkedList.cpp)
 
 # Encuentra Google Test
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
 # Vincula Google Test y pthread
-target_link_libraries(runTests ${GTEST_LIBRARIES} pthread)
+target_link_libraries(runTests GTest::gtest GTest::gtest_main pthread)
 
 include(GoogleTest)
 gtest_discover_tests(runTests)

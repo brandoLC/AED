@@ -10,11 +10,11 @@ private:
     struct Node {
         T data;
         Node* next;
-        Node(const T& data) : data(data), next(nullptr) {}
+        explicit Node(const T& data) : data(data), next(nullptr) {}
     };
     Node* head;
 
-    typename ForwardList<T>::Node* sortedInsert(typename ForwardList<T>::Node* sorted, typename ForwardList<T>::Node* newNode);
+    Node* sortedInsert( Node* sorted,  Node* newNode);
 
 public:
     ForwardList() : head(nullptr) {}

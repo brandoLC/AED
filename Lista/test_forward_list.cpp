@@ -215,7 +215,7 @@ TEST(ForwardListTest, IsPalindromo) {
     EXPECT_EQ(list5[0], 1);
 }
 
-// Prueba para el método remove
+// Prueba para el metodo remove
 TEST(ForwardListTest, Remove) {
     ForwardList<int> list = {1, 2, 3, 4, 5};
 
@@ -284,7 +284,3 @@ TEST(ForwardListTest,Insert){
 
 }
 
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}
