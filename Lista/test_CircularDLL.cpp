@@ -1,8 +1,11 @@
 //
 // Created by brano on 17/01/2025.
 //
-/*#include "CircularDLL.h"
+#include "CircularDLL.h"
 #include <gtest/gtest.h>
+
+
+
 
 TEST(CircularDLLTest, PushFrontBackTest) {
     CircularDLL<int> list;
@@ -93,4 +96,4 @@ TEST(CircularDLLTest, ReverseTest) {
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
-}*/
+}
