@@ -1,14 +1,12 @@
 //
 // Created by brano on 17/01/2025.
 //
-//
-// Created by brano on 17/01/2025.
-//
+
 #include "CircularDLL.h"
 #include <gtest/gtest.h>
 
 TEST(CircularDLLTest, PushFrontBackTest) {
-    List<int> list;  // Cambio de CircularDLL<int> a List<int>
+    List<int> list; 
     list.push_front(1);
     list.push_back(2);
     list.push_front(0);
@@ -38,11 +36,11 @@ TEST(CircularDLLTest, InsertRemoveTest) {
     List<int> list;
     list.push_back(1);
     list.push_back(3);
-    list.insertAt(2, 1); // Cambio de insert() a insertAt()
+    list.insertAt(2, 1);
     EXPECT_EQ(list[1], 2);
     EXPECT_EQ(list.size(), 3);
 
-    list.remove(1); // Remove element at position 1
+    list.remove(1);
     EXPECT_EQ(list[1], 3);
     EXPECT_EQ(list.size(), 2);
 }
@@ -87,7 +85,6 @@ TEST(CircularDLLTest, ReverseTest) {
 
     list.reverse();
 
-    // En lugar de usar índices, recorreremos la lista para validar el orden
     EXPECT_EQ(list.front(), 5);
     EXPECT_EQ(list.back(), 1);
 
