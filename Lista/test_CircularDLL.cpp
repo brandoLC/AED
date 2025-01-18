@@ -1,14 +1,14 @@
 //
 // Created by brano on 17/01/2025.
 //
+//
+// Created by brano on 17/01/2025.
+//
 #include "CircularDLL.h"
 #include <gtest/gtest.h>
 
-
-
-
 TEST(CircularDLLTest, PushFrontBackTest) {
-    CircularDLL<int> list;
+    List<int> list;  // Cambio de CircularDLL<int> a List<int>
     list.push_front(1);
     list.push_back(2);
     list.push_front(0);
@@ -20,7 +20,7 @@ TEST(CircularDLLTest, PushFrontBackTest) {
 }
 
 TEST(CircularDLLTest, PopFrontBackTest) {
-    CircularDLL<int> list;
+    List<int> list;
     list.push_back(1);
     list.push_back(2);
     list.push_back(3);
@@ -35,10 +35,10 @@ TEST(CircularDLLTest, PopFrontBackTest) {
 }
 
 TEST(CircularDLLTest, InsertRemoveTest) {
-    CircularDLL<int> list;
+    List<int> list;
     list.push_back(1);
     list.push_back(3);
-    list.insert(2, 1); // Insert 2 at position 1
+    list.insertAt(2, 1); // Cambio de insert() a insertAt()
     EXPECT_EQ(list[1], 2);
     EXPECT_EQ(list.size(), 3);
 
@@ -48,7 +48,7 @@ TEST(CircularDLLTest, InsertRemoveTest) {
 }
 
 TEST(CircularDLLTest, OperatorTest) {
-    CircularDLL<int> list;
+    List<int> list;
     list.push_back(1);
     list.push_back(2);
     list.push_back(3);
@@ -63,7 +63,7 @@ TEST(CircularDLLTest, OperatorTest) {
 }
 
 TEST(CircularDLLTest, EmptySizeClearTest) {
-    CircularDLL<int> list;
+    List<int> list;
     EXPECT_TRUE(list.empty());
     EXPECT_EQ(list.size(), 0);
 
@@ -78,7 +78,7 @@ TEST(CircularDLLTest, EmptySizeClearTest) {
 }
 
 TEST(CircularDLLTest, ReverseTest) {
-    CircularDLL<int> list;
+    List<int> list;
     list.push_back(1);
     list.push_back(2);
     list.push_back(3);
@@ -86,11 +86,15 @@ TEST(CircularDLLTest, ReverseTest) {
     list.push_back(5);
 
     list.reverse();
-    EXPECT_EQ(list[0], 5);
-    EXPECT_EQ(list[1], 4);
-    EXPECT_EQ(list[2], 3);
-    EXPECT_EQ(list[3], 2);
-    EXPECT_EQ(list[4], 1);
+
+    // En lugar de usar índices, recorreremos la lista para validar el orden
+    EXPECT_EQ(list.front(), 5);
+    EXPECT_EQ(list.back(), 1);
+
+    list.pop_front(); EXPECT_EQ(list.front(), 4);
+    list.pop_front(); EXPECT_EQ(list.front(), 3);
+    list.pop_front(); EXPECT_EQ(list.front(), 2);
+    list.pop_front(); EXPECT_EQ(list.front(), 1);
 }
 
 int main(int argc, char **argv) {
