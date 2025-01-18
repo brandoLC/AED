@@ -35,3 +35,8 @@ jobs:
         run: |
           cd build
           ./test_ForwardList
+
+      - name: Run CircularDLL tests
+        run: |
+          cd build
+          ./test_CircularDLL
