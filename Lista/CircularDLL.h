@@ -176,33 +176,38 @@ public:
 
 
     void insertAt(T value, int position) {
-        if (position < 0 || position > count-1) {
-            throw out_of_range("Posicion fuera de rango");
-        }
-        if (position == 0) {
-            push_front(value);
-            return;
-        }
-        if (position == count-1) {  // Caso borde
-            push_back(value);
-            return;
-        }
-
-        ListNode<T>* nodo = new ListNode<T>(value);
-        ListNode<T>* temp = (position < count / 2) ? head : tail;
-
-        if (position < count / 2) {
-            for (int i = 0; i < position - 1; i++) temp = temp->next;
-        } else {
-            for (int i = count - 1; i >= position; i--) temp = temp->prev;
-        }
-
-        nodo->next = temp->next;
-        nodo->prev = temp;
-        temp->next->prev = nodo;
-        temp->next = nodo;
-        count++;
+    if (position < 0 || position > count) {
+        throw out_of_range("Posicion fuera de rango");
     }
+    if (position == 0) {
+        push_front(value);
+        return;
+    }
+    if (position == count) {  // Caso borde
+        push_back(value);
+        return;
+    }
+
+    ListNode<T>* nodo = new ListNode<T>(value);
+    ListNode<T>* temp = head;
+
+    if (position < count / 2) {
+        for (int i = 0; i < position - 1; i++) {
+            temp = temp->next;
+        }
+    } else {
+        temp = tail;
+        for (int i = count - 1; i >= position; i--) {
+            temp = temp->prev;
+        }
+    }
+
+    nodo->next = temp->next;
+    nodo->prev = temp;
+    temp->next->prev = nodo;
+    temp->next = nodo;
+    count++;
+}
 
 
 
