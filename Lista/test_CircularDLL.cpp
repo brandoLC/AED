@@ -1,0 +1,96 @@
+//
+// Created by brano on 17/01/2025.
+//
+/*#include "CircularDLL.h"
+#include <gtest/gtest.h>
+
+TEST(CircularDLLTest, PushFrontBackTest) {
+    CircularDLL<int> list;
+    list.push_front(1);
+    list.push_back(2);
+    list.push_front(0);
+    list.push_back(3);
+
+    EXPECT_EQ(list.front(), 0);
+    EXPECT_EQ(list.back(), 3);
+    EXPECT_EQ(list.size(), 4);
+}
+
+TEST(CircularDLLTest, PopFrontBackTest) {
+    CircularDLL<int> list;
+    list.push_back(1);
+    list.push_back(2);
+    list.push_back(3);
+    list.push_back(4);
+    list.push_back(5);
+
+    EXPECT_EQ(list.pop_front(), 1);
+    EXPECT_EQ(list.pop_back(), 5);
+    EXPECT_EQ(list.size(), 3);
+    EXPECT_EQ(list.front(), 2);
+    EXPECT_EQ(list.back(), 4);
+}
+
+TEST(CircularDLLTest, InsertRemoveTest) {
+    CircularDLL<int> list;
+    list.push_back(1);
+    list.push_back(3);
+    list.insert(2, 1); // Insert 2 at position 1
+    EXPECT_EQ(list[1], 2);
+    EXPECT_EQ(list.size(), 3);
+
+    list.remove(1); // Remove element at position 1
+    EXPECT_EQ(list[1], 3);
+    EXPECT_EQ(list.size(), 2);
+}
+
+TEST(CircularDLLTest, OperatorTest) {
+    CircularDLL<int> list;
+    list.push_back(1);
+    list.push_back(2);
+    list.push_back(3);
+    list.push_back(4);
+    list.push_back(5);
+
+    EXPECT_EQ(list[0], 1);
+    EXPECT_EQ(list[1], 2);
+    EXPECT_EQ(list[2], 3);
+    EXPECT_EQ(list[3], 4);
+    EXPECT_EQ(list[4], 5);
+}
+
+TEST(CircularDLLTest, EmptySizeClearTest) {
+    CircularDLL<int> list;
+    EXPECT_TRUE(list.empty());
+    EXPECT_EQ(list.size(), 0);
+
+    list.push_back(1);
+    list.push_back(2);
+    EXPECT_FALSE(list.empty());
+    EXPECT_EQ(list.size(), 2);
+
+    list.clear();
+    EXPECT_TRUE(list.empty());
+    EXPECT_EQ(list.size(), 0);
+}
+
+TEST(CircularDLLTest, ReverseTest) {
+    CircularDLL<int> list;
+    list.push_back(1);
+    list.push_back(2);
+    list.push_back(3);
+    list.push_back(4);
+    list.push_back(5);
+
+    list.reverse();
+    EXPECT_EQ(list[0], 5);
+    EXPECT_EQ(list[1], 4);
+    EXPECT_EQ(list[2], 3);
+    EXPECT_EQ(list[3], 2);
+    EXPECT_EQ(list[4], 1);
+}
+
+int main(int argc, char **argv) {
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+}*/
