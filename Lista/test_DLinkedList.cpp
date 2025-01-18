@@ -15,6 +15,111 @@ TEST(DLinkedListTest,InitializerTest) {
     EXPECT_EQ(list.front(),2);
 }
 
+TEST(DLinkedListTest, IteratorTest) {
+    DLinkedList<int> list = {1, 2, 3, 4, 5};
+
+    // Test forward iteration
+    auto it = list.begin();
+    EXPECT_EQ(*it, 1);
+    ++it;
+    EXPECT_EQ(*it, 2);
+    ++it;
+    EXPECT_EQ(*it, 3);
+    ++it;
+    EXPECT_EQ(*it, 4);
+    ++it;
+    EXPECT_EQ(*it, 5);
+    ++it;
+    EXPECT_EQ(it, list.end());
+
+    // Test backward iteration
+    it = list.end();
+    --it;
+    EXPECT_EQ(*it, 5);
+    --it;
+    EXPECT_EQ(*it, 4);
+    --it;
+    EXPECT_EQ(*it, 3);
+    --it;
+    EXPECT_EQ(*it, 2);
+    --it;
+    EXPECT_EQ(*it, 1);
+    EXPECT_THROW(--it, std::out_of_range);
+
+    // Test dereferencing end iterator
+    it = list.end();
+    EXPECT_THROW(*it, std::out_of_range);
+}
+
+TEST(DLinkedListTest, ReverseTest) {
+    DLinkedList<int> list = {1, 2, 3, 4, 5};
+    list.reverse();
+    EXPECT_EQ(list.size(), 5);
+    EXPECT_EQ(list[0], 5);
+    EXPECT_EQ(list[1], 4);
+    EXPECT_EQ(list[2], 3);
+    EXPECT_EQ(list[3], 2);
+    EXPECT_EQ(list[4], 1);
+
+    // Check next pointers
+    auto it = list.begin();
+    EXPECT_EQ(*it, 5);
+    ++it;
+    EXPECT_EQ(*it, 4);
+    ++it;
+    EXPECT_EQ(*it, 3);
+    ++it;
+    EXPECT_EQ(*it, 2);
+    ++it;
+    EXPECT_EQ(*it, 1);
+
+    // Check prev pointers
+    it = list.end();
+    --it;
+    EXPECT_EQ(*it, 1);
+    --it;
+    EXPECT_EQ(*it, 2);
+    --it;
+    EXPECT_EQ(*it, 3);
+    --it;
+    EXPECT_EQ(*it, 4);
+    --it;
+    EXPECT_EQ(*it, 5);
+
+    list.reverse();
+    EXPECT_EQ(list.size(), 5);
+    EXPECT_EQ(list[0], 1);
+    EXPECT_EQ(list[1], 2);
+    EXPECT_EQ(list[2], 3);
+    EXPECT_EQ(list[3], 4);
+    EXPECT_EQ(list[4], 5);
+
+    // Check next pointers again
+    it = list.begin();
+    EXPECT_EQ(*it, 1);
+    ++it;
+    EXPECT_EQ(*it, 2);
+    ++it;
+    EXPECT_EQ(*it, 3);
+    ++it;
+    EXPECT_EQ(*it, 4);
+    ++it;
+    EXPECT_EQ(*it, 5);
+
+    // Check prev pointers again
+    it = list.end();
+    --it;
+    EXPECT_EQ(*it, 5);
+    --it;
+    EXPECT_EQ(*it, 4);
+    --it;
+    EXPECT_EQ(*it, 3);
+    --it;
+    EXPECT_EQ(*it, 2);
+    --it;
+    EXPECT_EQ(*it, 1);
+}
+
 TEST(DLinkedListTest,PushFrontTest) {
     DLinkedList<int> list;
     list.push_front(1);

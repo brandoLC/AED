@@ -8,8 +8,7 @@
 #include <initializer_list>
 #include <stdexcept>
 #include <cstddef>
-
-#include "forward_list.h"
+#include <functional>
 
 template<typename T>
 class DLinkedList {
@@ -23,6 +22,40 @@ private:
     Node* head;
     Node* tail;
 public:
+    class iterator {
+        Node* current;
+        DLinkedList* list;
+    public:
+        iterator(Node* node,DLinkedList* list):current(node),list(list){}
+        T& operator*() {
+            if (!current) throw std::out_of_range("Dereferencing end iterator");
+            return current->data;
+        }
+        iterator& operator++() {
+            if (current) current = current->next;
+            return *this;
+        }
+
+        iterator& operator--() {
+            if (!current){
+
+                if (!list || !list->tail) throw std::out_of_range("Cannot decrement end() in an empty list");
+                current=list->tail;
+            }else {
+                if (current == nullptr || current->prev == nullptr) {
+                    throw std::out_of_range("Iterator cannot be decremented past the beginning of the list");
+                }
+                current = current->prev;
+            }
+            return *this;
+        }
+        bool operator==(const iterator& other) const {
+            return current == other.current;
+        }
+        bool operator!=(const iterator& other) const {
+            return current != other.current;
+        }
+    };
     DLinkedList() : head(nullptr), tail(nullptr) {}
     DLinkedList(std::initializer_list<T> init_list);
     ~DLinkedList();
@@ -36,9 +69,11 @@ public:
     std::size_t size() const;
     bool empty() const;
     void clear();
+    void reverse();
     T& operator[](int index);
     const T& operator[](int index) const;
-
+    iterator begin(){return iterator(head,this);}
+    iterator end(){return iterator(nullptr,this);}
 
 };
 
@@ -66,6 +101,28 @@ void DLinkedList<T>::push_front(const T &value) {
         head = newNode;
     }
 }
+
+template<typename T>
+void DLinkedList<T>::reverse() {
+    if (!head) return;
+
+    std::function<Node*(Node*)> reverse_list = [&](Node* node) -> Node* {
+        if (!node || !node->next) {
+            return node;
+        }
+        Node* newHead = reverse_list(node->next);
+        node->next->next = node;
+        node->prev=node->next;
+        node->next = nullptr;
+        return newHead;
+    };
+
+    tail = head;
+    head = reverse_list(head);
+    head->prev=nullptr;
+    tail->next = nullptr;
+}
+
 
 template<typename T>
 void DLinkedList<T>::push_back(const T &value) {

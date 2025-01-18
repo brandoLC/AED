@@ -10,8 +10,10 @@ enable_testing()
 include_directories(include)
 
 # Add source files for each test
-add_executable(test_DLinkedList Lista/test_DLinkedList.cpp)
-add_executable(test_ForwardList Lista/test_forward_list.cpp)
+add_executable(test_DLinkedList Lista/test_DLinkedList.cpp
+        Lista/DLinkedList.h)
+add_executable(test_ForwardList Lista/test_forward_list.cpp
+        Lista/forward_list.h)
 
 # Find Google Test
 find_package(GTest REQUIRED)
