@@ -97,7 +97,3 @@ TEST(CircularDLLTest, ReverseTest) {
     EXPECT_EQ(list.back(), 1);
 }
 
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}
