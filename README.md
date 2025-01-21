@@ -63,7 +63,7 @@ Para usuarios de Windows, se recomienda utilizar CLion, ya que facilita la insta
 1. Descarga e instala CLion desde JetBrains.
 2. Abre tu proyecto en CLion.
 3. Sigue las instrucciones de CLion para instalar Google Test cuando se detecte que no está instalado en el sistema. CLion te ofrecerá instalar Google Test utilizando vcpkg automáticamente.
-
+![Video de Introducción](src/videos/Grabación-2025-01-21-105822.gif)
 ## Cómo Compilar y Ejecutar
 
 ### Instrucciones
