@@ -16,7 +16,12 @@ add_executable(test_DLinkedList Lista/test_DLinkedList.cpp
 add_executable(test_ForwardList Lista/test_forward_list.cpp
         Lista/forward_list.h)
 add_executable(test_CircularDLL Lista/test_CircularDLL.cpp
-        Lista/CircularDLL.h)
+        Lista/CircularDLL.h
+        Tablas_arboles/test_HashTable.cpp
+        Tablas_arboles/BinarySearchTree.h
+        Tablas_arboles/test_BynarySearchTree.cpp)
+add_executable(test_hashTable Tablas_arboles/hashTable.h
+        Tablas_arboles/test_HashTable.cpp)
 
 
 # Find Google Test
@@ -27,9 +32,11 @@ include_directories(${GTEST_INCLUDE_DIRS})
 target_link_libraries(test_DLinkedList GTest::gtest GTest::gtest_main pthread)
 target_link_libraries(test_ForwardList GTest::gtest GTest::gtest_main pthread)
 target_link_libraries(test_CircularDLL GTest::gtest GTest::gtest_main pthread)
+target_link_libraries(test_hashTable GTest::gtest GTest::gtest_main pthread)
 
 # Include GoogleTest
 include(GoogleTest)
 gtest_discover_tests(test_DLinkedList)
 gtest_discover_tests(test_ForwardList)
 gtest_discover_tests(test_CircularDLL)
+gtest_discover_tests(test_hashTable)
