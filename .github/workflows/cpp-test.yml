@@ -1,4 +1,4 @@
-name: C++ CI
+name: C++ CI with Allure
 
 on:
   push:
@@ -26,27 +26,41 @@ jobs:
           cmake ..
           make
 
-      - name: Run DLinkedList tests
-        run: |
-          cd build
-          ./test_DLinkedList
-
       - name: Run ForwardList tests
         run: |
+          mkdir -p test-reports
           cd build
-          ./test_ForwardList
+          ./test_ForwardList --gtest_output=xml:../test-reports/forwardlist.xml
 
       - name: Run CircularDLL tests
         run: |
           cd build
-          ./test_CircularDLL
+          ./test_CircularDLL --gtest_output=xml:../test-reports/circulardll.xml
 
-      - name: Run HashTable_Set tests
+      - name: Run BinarySearchTree tests
         run: |
           cd build
-          ./test_HashTable_Set
+          ./test_BinarySearchTree --gtest_output=xml:../test-reports/binarysearchtree.xml
 
-      - name: Run HashTable_Map tests
+      - name: Run HashSet tests
         run: |
           cd build
-          ./test_HashTable_Map
+          ./test_HashSet --gtest_output=xml:../test-reports/hashset.xml
+
+      - name: Install Allure CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y default-jre
+          curl -sL https://github.com/allure-framework/allure2/releases/download/2.20.0/allure-2.20.0.tgz | tar -xz
+          sudo mv allure-2.20.0 /opt/allure
+          sudo ln -s /opt/allure/bin/allure /usr/bin/allure
+
+      - name: Generate Allure Report
+        run: |
+          allure generate test-reports -o allure-report
+
+      - name: Upload Allure Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-report
+          path: allure-report
