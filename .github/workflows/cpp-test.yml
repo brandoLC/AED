@@ -12,9 +12,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      checks: write   # Necesario para crear checks
+      checks: write
       actions: write
-      contents: read  # Necesario para clonar el repo
+      contents: read
 
     steps:
       - name: Check out repository
@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y g++ cmake libgtest-dev jq
+          sudo apt-get install -y g++ cmake libgtest-dev jq libxml2-utils  # ¡Añade libxml2-utils aquí!
 
       - name: Build project
         run: |
@@ -35,7 +35,6 @@ jobs:
       - name: Run tests and generate reports
         run: |
           cd build
-          # Generar XML para cada test
           ./test_DLinkedList --gtest_output="xml:DLinkedList.xml"
           ./test_ForwardList --gtest_output="xml:ForwardList.xml"
           ./test_CircularDLL --gtest_output="xml:CircularDLL.xml"
@@ -45,10 +44,9 @@ jobs:
 
       - name: Publish individual test reports
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Si es un fork, usa un PAT
         run: |
           cd build
-          # Lista de todos los reports generados
           REPORTS=(
             "DLinkedList.xml"
             "ForwardList.xml"
@@ -60,20 +58,15 @@ jobs:
 
           for REPORT in "${REPORTS[@]}"; do
             if [ -f "$REPORT" ]; then
-              # Extraer nombre del test suite
               SUITE_NAME=$(basename "$REPORT" .xml)
-          
-              # Contar fallos
               FAILURES=$(xmllint --xpath 'string(//testsuite/@failures)' "$REPORT")
               ERROR=$(xmllint --xpath 'string(//testsuite/@errors)' "$REPORT")
           
-              # Determinar conclusión
               CONCLUSION="success"
               if [ "$FAILURES" -gt 0 ] || [ "$ERROR" -gt 0 ]; then
                 CONCLUSION="failure"
               fi
 
-              # Crear check individual
               gh api repos/${{ github.repository }}/check-runs \
                 -X POST \
                 -H "Accept: application/vnd.github+json" \
