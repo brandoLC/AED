@@ -42,10 +42,10 @@ jobs:
           cd build
           ./test_BinarySearchTree --gtest_output=xml:../test-reports/binarysearchtree.xml
 
-      - name: Run HashSet tests
+      - name: Run HashTable_Set tests
         run: |
           cd build
-          ./test_HashSet --gtest_output=xml:../test-reports/hashset.xml
+            ./test_HashTable_Set --gtest_output=xml:../test-reports/hashtable_set.xml
 
       - name: Install Allure CLI
         run: |
