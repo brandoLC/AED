@@ -17,17 +17,14 @@ jobs:
       contents: read
 
     steps:
-      # Paso 1: Clonar el repositorio
       - name: Check out repository
         uses: actions/checkout@v3
 
-      # Paso 2: Instalar dependencias
       - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y g++ cmake libgtest-dev jq libxml2-utils
 
-      # Paso 3: Construir el proyecto con CMake
       - name: Build project
         run: |
           mkdir -p build
@@ -35,40 +32,62 @@ jobs:
           cmake ..
           make
 
-      # Paso 4: Ejecutar pruebas y generar informes en formato XML
       - name: Run tests and generate reports
         run: |
           cd build
-          ctest --output-on-failure --tests-regex . --verbose
+          ./test_DLinkedList --gtest_output="xml:DLinkedList.xml"
+          ./test_ForwardList --gtest_output="xml:ForwardList.xml"
+          ./test_CircularDLL --gtest_output="xml:CircularDLL.xml"
+          ./test_BinarySearchTree --gtest_output="xml:BinarySearchTree.xml"
+          ./test_HashTable_Set --gtest_output="xml:HashTable_Set.xml"
+          ./test_HashTable_Map --gtest_output="xml:HashTable_Map.xml"
 
-      # Paso 5: Publicar los reportes de pruebas individuales
+      - name: Debug XML files (opcional)
+        run: |
+          cd build
+          cat DLinkedList.xml  # Verifica que el archivo XML se generó correctamente
+
       - name: Publish individual test reports
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Si es un fork, usa un PAT
         run: |
           cd build
-          REPORTS=$(find . -name "*.xml")
+          REPORTS=(
+            "DLinkedList.xml"
+            "ForwardList.xml"
+            "CircularDLL.xml"
+            "BinarySearchTree.xml"
+            "HashTable_Set.xml"
+            "HashTable_Map.xml"
+          )
 
-          for REPORT in $REPORTS; do
-            SUITE_NAME=$(basename "$REPORT" .xml)
-            FAILURES=$(xmllint --xpath 'string(//testsuite/@failures)' "$REPORT" 2>/dev/null || echo "0")
-            ERRORS=$(xmllint --xpath 'string(//testsuite/@errors)' "$REPORT" 2>/dev/null || echo "0")
+          for REPORT in "${REPORTS[@]}"; do
+            if [ -f "$REPORT" ]; then
+              SUITE_NAME=$(basename "$REPORT" .xml)
+              FAILURES=$(xmllint --xpath 'string(//testsuite/@failures)' "$REPORT")
+              ERROR=$(xmllint --xpath 'string(//testsuite/@errors)' "$REPORT")
           
-            CONCLUSION="success"
-            if [ "$FAILURES" -gt 0 ] || [ "$ERRORS" -gt 0 ]; then
-              CONCLUSION="failure"
-            fi
+              CONCLUSION="success"
+              if [ "$FAILURES" -gt 0 ] || [ "$ERROR" -gt 0 ]; then
+                CONCLUSION="failure"
+              fi
 
-            gh api repos/${{ github.repository }}/check-runs \
-              -X POST \
-              -H "Accept: application/vnd.github+json" \
-              -H "X-GitHub-Api-Version: 2022-11-28" \
-              -f name="Test Suite: $SUITE_NAME" \
-              -f status="completed" \
-              -f conclusion="$CONCLUSION" \
-              -f output="$(jq -n \
-                --arg title "$SUITE_NAME Test Results" \
-                --arg summary "$(xmllint --xpath '//testsuite/@name' "$REPORT" 2>/dev/null || echo "$SUITE_NAME")" \
-                --arg text "$(cat $REPORT)" \
-                '{title: $title, summary: $summary, text: $text}')"
+              # Obtener el SHA del commit actual
+              HEAD_SHA=$(git rev-parse HEAD)
+
+              # Crear el check con el SHA del commit
+              gh api repos/${{ github.repository }}/check-runs \
+                -X POST \
+                -H "Accept: application/vnd.github+json" \
+                -H "X-GitHub-Api-Version: 2022-11-28" \
+                -f name="Test Suite: $SUITE_NAME" \
+                -f head_sha="$HEAD_SHA" \
+                -f status="completed" \
+                -f conclusion="$CONCLUSION" \
+                -f output="$(jq -n \
+                  --arg title "$SUITE_NAME Test Results" \
+                  --arg summary "$(xmllint --xpath '//testsuite/@name' "$REPORT")" \
+                  --arg text "$(cat $REPORT)" \
+                  '{title: $title, summary: $summary, text: $text}')"
+            fi
           done
