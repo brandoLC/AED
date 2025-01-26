@@ -137,13 +137,13 @@ TEST(BinarySearchTreeTest, WidthOfTree) {
 TEST(BinarySearchTreeTest, IsEmptyTree) {
     BinarySearchTree<int> bst;
 
-    EXPECT_TRUE(bst.isEmpty()); // Árbol recién creado está vacío
+    EXPECT_TRUE(bst.isEmpty());
 
     bst.insert(10);
-    EXPECT_FALSE(bst.isEmpty()); // Después de insertar, ya no está vacío
+    EXPECT_FALSE(bst.isEmpty());
 
     bst.remove(10);
-    EXPECT_TRUE(bst.isEmpty()); // Después de eliminar el único elemento, está vacío
+    EXPECT_TRUE(bst.isEmpty());
 }
 
 // Test: Operaciones con diferentes tipos de datos

@@ -40,3 +40,18 @@ jobs:
         run: |
           cd build
           ./test_CircularDLL
+
+      - name: Run BinarySearchTree tests
+        run: |
+          cd build
+          ./test_BinarySearchTree
+
+      - name: Run HashTable_Set tests
+        run: |
+          cd build
+          ./test_HashTable_Set
+
+      - name: Run HashTable_Map tests
+        run: |
+          cd build
+          ./test_HashTable_Map

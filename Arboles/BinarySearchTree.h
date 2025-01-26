@@ -18,7 +18,7 @@ public:
     TreeNode* right;
 
     // Constructor
-    TreeNode(T val) : data(val), left(nullptr), right(nullptr) {}
+    explicit TreeNode(T val) : data(val), left(nullptr), right(nullptr) {}
 };
 
 template <typename T>
