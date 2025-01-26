@@ -49,10 +49,10 @@ jobs:
           ./test_BinarySearchTree --gtest_output=xml:../test-reports/binarysearchtree.xml
 
       # 7. Run HashSet tests and generate JUnit XML report
-      - name: Run HashSet tests
+      - name: Run HashTable_Set tests
         run: |
           cd build
-          ./test_HashSet --gtest_output=xml:../test-reports/hashset.xml
+          ./test_HashTable_Set --gtest_output=xml:../test-reports/hashtable_set.xml
 
       # 8. Upload JUnit report as an artifact to GitHub
       - name: Upload JUnit report
