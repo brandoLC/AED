@@ -12,6 +12,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    # Permisos necesarios para publicar los reports
+    permissions:
+      checks: write    # Permite crear checks en PRs
+      actions: write   # Permite actualizar el job
+      statuses: write  # Permite actualizar el estado
+
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
@@ -29,15 +35,23 @@ jobs:
       - name: Run tests and generate JUnit reports
         run: |
           cd build
-          # Ejecutar cada prueba y generar un archivo XML
-          ./test_DLinkedList --gtest_output="xml:test_DLinkedList_results.xml"
-          ./test_ForwardList --gtest_output="xml:test_ForwardList_results.xml"
-          ./test_CircularDLL --gtest_output="xml:test_CircularDLL_results.xml"
-          ./test_BinarySearchTree --gtest_output="xml:test_BinarySearchTree_results.xml"
-          ./test_HashTable_Set --gtest_output="xml:test_HashTable_Set_results.xml"
-          ./test_hashTable_map --gtest_output="xml:test_hashTable_map_results.xml"
+          # Genera un XML por cada suite de pruebas
+          ./test_DLinkedList --gtest_output="xml:test_DLinkedList.xml"
+          ./test_ForwardList --gtest_output="xml:test_ForwardList.xml"
+          ./test_CircularDLL --gtest_output="xml:test_CircularDLL.xml"
+          ./test_BinarySearchTree --gtest_output="xml:test_BinarySearchTree.xml"
+          ./test_HashTable_Set --gtest_output="xml:test_HashTable_Set.xml"
+          ./test_hashTable_map --gtest_output="xml:test_hashTable_map.xml"
 
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v3
         with:
-          report_paths: 'build/*_results.xml' # Procesa todos los XML
+          report_paths: |
+            build/test_DLinkedList.xml
+            build/test_ForwardList.xml
+            build/test_CircularDLL.xml
+            build/test_BinarySearchTree.xml
+            build/test_HashTable_Set.xml
+            build/test_hashTable_map.xml
+          check_title: "JUnit Test Report"
+          fail_on_failure: false
