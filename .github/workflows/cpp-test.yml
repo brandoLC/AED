@@ -42,11 +42,6 @@ jobs:
           ./test_HashTable_Set --gtest_output="xml:HashTable_Set.xml"
           ./test_HashTable_Map --gtest_output="xml:HashTable_Map.xml"
 
-      - name: Debug XML files (opcional)
-        run: |
-          cd build
-          cat DLinkedList.xml  # Verifica que el archivo XML se generó correctamente
-
       - name: Publish individual test reports
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Si es un fork, usa un PAT
@@ -75,6 +70,16 @@ jobs:
               # Obtener el SHA del commit actual
               HEAD_SHA=$(git rev-parse HEAD)
 
+              # Leer el contenido del XML y escapar caracteres especiales
+              XML_CONTENT=$(cat "$REPORT" | jq -sR .)
+
+              # Crear el JSON para el campo output
+              OUTPUT_JSON=$(jq -n \
+                --arg title "$SUITE_NAME Test Results" \
+                --arg summary "$(xmllint --xpath '//testsuite/@name' "$REPORT")" \
+                --argjson text "$XML_CONTENT" \
+                '{title: $title, summary: $summary, text: $text}')
+
               # Crear el check con el SHA del commit
               gh api repos/${{ github.repository }}/check-runs \
                 -X POST \
@@ -84,10 +89,6 @@ jobs:
                 -f head_sha="$HEAD_SHA" \
                 -f status="completed" \
                 -f conclusion="$CONCLUSION" \
-                -f output="$(jq -n \
-                  --arg title "$SUITE_NAME Test Results" \
-                  --arg summary "$(xmllint --xpath '//testsuite/@name' "$REPORT")" \
-                  --arg text "$(cat $REPORT)" \
-                  '{title: $title, summary: $summary, text: $text}')"
+                -f output="$OUTPUT_JSON"
             fi
           done
