@@ -47,18 +47,16 @@ jobs:
           cd build
           ./test_HashTable_Set --gtest_output=xml:../test-reports/hashtable_set.xml
 
-      # Subir el artefacto (para descargar los XML)
       - name: Upload JUnit report
         uses: actions/upload-artifact@v4
         with:
           name: junit-report-${{ github.run_id }}
           path: test-reports/*.xml
 
-      # Mostrar el reporte en la interfaz de GitHub Actions
       - name: Display JUnit Report
         uses: dorny/test-reporter@v1
         if: always()
         with:
           name: Test Results
           path: test-reports/*.xml
-          reporter: junit
+          reporter: java-junit  # Valor corregido
