@@ -13,15 +13,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Check out repository
       - name: Check out repository
         uses: actions/checkout@v2
 
-      # 2. Install dependencies (GTest, CMake)
       - name: Install dependencies
         run: sudo apt-get install -y g++ cmake libgtest-dev
 
-      # 3. Build the project
       - name: Build
         run: |
           mkdir build
@@ -29,41 +26,39 @@ jobs:
           cmake ..
           make
 
-      # 4. Run ForwardList tests and generate JUnit XML report
       - name: Run ForwardList tests
         run: |
           mkdir -p test-reports
           cd build
           ./test_ForwardList --gtest_output=xml:../test-reports/forwardlist.xml
 
-      # 5. Run CircularDLL tests and generate JUnit XML report
       - name: Run CircularDLL tests
         run: |
           cd build
           ./test_CircularDLL --gtest_output=xml:../test-reports/circulardll.xml
 
-      # 6. Run BinarySearchTree tests and generate JUnit XML report
       - name: Run BinarySearchTree tests
         run: |
           cd build
           ./test_BinarySearchTree --gtest_output=xml:../test-reports/binarysearchtree.xml
 
-      # 7. Run HashSet tests and generate JUnit XML report
       - name: Run HashTable_Set tests
         run: |
           cd build
           ./test_HashTable_Set --gtest_output=xml:../test-reports/hashtable_set.xml
 
-      # 8. Upload JUnit report as an artifact to GitHub
+      # Subir el artefacto (para descargar los XML)
       - name: Upload JUnit report
         uses: actions/upload-artifact@v4
         with:
-          name: junit-report-${{ github.run_id }}  # Agregar run_id para hacerlo único
+          name: junit-report-${{ github.run_id }}
           path: test-reports/*.xml
 
-      # 9. Display the JUnit report in GitHub Actions (opcional, si deseas ver los informes directamente en la interfaz)
-      - name: Display JUnit report
-        uses: actions/upload-artifact@v4
+      # Mostrar el reporte en la interfaz de GitHub Actions
+      - name: Display JUnit Report
+        uses: dorny/test-reporter@v1
+        if: always()
         with:
-          name: junit-report-${{ github.run_id }}  # Usar un nombre único
+          name: Test Results
           path: test-reports/*.xml
+          reporter: junit
