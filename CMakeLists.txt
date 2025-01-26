@@ -20,7 +20,7 @@ add_executable(test_BinarySearchTree Arboles/BinarySearchTree.h
         Arboles/test_BynarySearchTree.cpp)
 add_executable(test_HashTable_Set Tablas_hash/hashTable_Set.h
         Tablas_hash/test_HashTable_Set.cpp)
-add_executable(test_hashTable_map Tablas_hash/hashTable_Map.h
+add_executable(test_HashTable_Map Tablas_hash/hashTable_Map.h
         Tablas_hash/test_HashTable_Map.cpp)
 
 
@@ -34,7 +34,7 @@ target_link_libraries(test_ForwardList GTest::gtest GTest::gtest_main pthread)
 target_link_libraries(test_CircularDLL GTest::gtest GTest::gtest_main pthread)
 target_link_libraries(test_HashTable_Set GTest::gtest GTest::gtest_main pthread)
 target_link_libraries(test_BinarySearchTree GTest::gtest GTest::gtest_main pthread)
-target_link_libraries(test_hashTable_map GTest::gtest GTest::gtest_main pthread)
+target_link_libraries(test_HashTable_Map GTest::gtest GTest::gtest_main pthread)
 
 # Include GoogleTest
 include(GoogleTest)
@@ -43,4 +43,4 @@ gtest_discover_tests(test_ForwardList)
 gtest_discover_tests(test_CircularDLL)
 gtest_discover_tests(test_HashTable_Set)
 gtest_discover_tests(test_BinarySearchTree)
-gtest_discover_tests(test_hashTable_map)
+gtest_discover_tests(test_HashTable_Map)
