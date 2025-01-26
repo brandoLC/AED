@@ -58,33 +58,12 @@ jobs:
       - name: Upload JUnit report
         uses: actions/upload-artifact@v4
         with:
-          name: junit-report
+          name: junit-report-${{ github.run_id }}  # Agregar run_id para hacerlo único
           path: test-reports/*.xml
 
-      # 9. Display the JUnit report in GitHub Actions
+      # 9. Display the JUnit report in GitHub Actions (opcional, si deseas ver los informes directamente en la interfaz)
       - name: Display JUnit report
         uses: actions/upload-artifact@v4
         with:
-          name: junit-report
+          name: junit-report-${{ github.run_id }}  # Usar un nombre único
           path: test-reports/*.xml
-
-      # 10. Upload Allure Report (optional)
-      - name: Install Allure CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y default-jre
-          curl -sL https://github.com/allure-framework/allure2/releases/download/2.20.0/allure-2.20.0.tgz | tar -xz
-          sudo mv allure-2.20.0 /opt/allure
-          sudo ln -s /opt/allure/bin/allure /usr/bin/allure
-
-      # 11. Generate Allure Report (optional)
-      - name: Generate Allure Report
-        run: |
-          allure generate test-reports -o allure-report
-
-      # 12. Upload Allure Report as artifact (optional)
-      - name: Upload Allure Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-report
-          path: allure-report
