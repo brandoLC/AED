@@ -37,6 +37,11 @@ jobs:
           cd build
           ./test_CircularDLL --gtest_output=xml:../test-reports/circulardll.xml
 
+      - name: Run DLinkedList tests
+        run: |
+          cd build
+          ./test_DLinkedList --gtest_output=xml:../test-reports/doublylinkedlist.xml
+
       - name: Run BinarySearchTree tests
         run: |
           cd build
