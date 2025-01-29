@@ -52,6 +52,11 @@ jobs:
           cd build
           ./test_HashTable_Set --gtest_output=xml:../test-reports/hashtable_set.xml
 
+      - name: Run SkipList tests
+        run: |
+          cd build
+          ./test_SkipList --gtest_output=xml:../test-reports/skiplist.xml
+
       - name: Upload JUnit report
         uses: actions/upload-artifact@v4
         with:
