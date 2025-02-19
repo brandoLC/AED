@@ -24,8 +24,8 @@ add_executable(test_HashTable_Map Tablas_hash/hashTable_Map.h
         Tablas_hash/test_HashTable_Map.cpp)
 add_executable(test_SkipList Lista/SkipList.h
         Lista/test_SkipList.cpp)
-add_executable(test_MatrizDispersa MatrizDispersa/test_MatrizDispersa.cpp
-        MatrizDispersa/MatrizDispersa.h)
+add_executable(test_MatrizDispersa matrizDispersa/test_MatrizDispersa.cpp
+        matrizDispersa/MatrizDispersa.h)
 
 
 # Find Google Test
