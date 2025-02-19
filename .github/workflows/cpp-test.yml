@@ -57,6 +57,11 @@ jobs:
           cd build
           ./test_SkipList --gtest_output=xml:../test-reports/skiplist.xml
 
+      - name: Run MatrizDispersa tests
+        run: |
+          cd build
+          ./test_MatrizDispersa --gtest_output=xml:../test-reports/matrizdispersa.xml
+
       - name: Upload JUnit report
         uses: actions/upload-artifact@v4
         with:

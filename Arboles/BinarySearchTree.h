@@ -37,13 +37,13 @@ private:
         }
         return node;
     }
-    bool isMirror(TreeNode<T>* left, TreeNode<T>* right) {
+    /*bool isMirror(TreeNode<T>* left, TreeNode<T>* right) {
         if (!left && !right) return true;   // Ambos son nulos, es un espejo
         if (!left || !right) return false; // Solo uno es nulo, no es un espejo
         return (left->data == right->data) // Raíz igual
             && isMirror(left->left, right->right)  // Subárbol izquierdo de "left" con subárbol derecho de "right"
             && isMirror(left->right, right->left); // Subárbol derecho de "left" con subárbol izquierdo de "right"
-    }
+    }*/
     TreeNode<T>* findMin(TreeNode<T>* node) {
         while (node && node->left) node = node->left;
         return node;

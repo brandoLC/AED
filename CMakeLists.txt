@@ -24,6 +24,8 @@ add_executable(test_HashTable_Map Tablas_hash/hashTable_Map.h
         Tablas_hash/test_HashTable_Map.cpp)
 add_executable(test_SkipList Lista/SkipList.h
         Lista/test_SkipList.cpp)
+add_executable(test_MatrizDispersa MatrizDispersa/test_MatrizDispersa.cpp
+        MatrizDispersa/MatrizDispersa.h)
 
 
 # Find Google Test
@@ -38,6 +40,7 @@ target_link_libraries(test_HashTable_Set GTest::gtest GTest::gtest_main pthread)
 target_link_libraries(test_BinarySearchTree GTest::gtest GTest::gtest_main pthread)
 target_link_libraries(test_HashTable_Map GTest::gtest GTest::gtest_main pthread)
 target_link_libraries(test_SkipList GTest::gtest GTest::gtest_main pthread)
+target_link_libraries(test_MatrizDispersa GTest::gtest GTest::gtest_main pthread)
 
 # Include GoogleTest
 include(GoogleTest)
@@ -48,3 +51,4 @@ gtest_discover_tests(test_HashTable_Set)
 gtest_discover_tests(test_BinarySearchTree)
 gtest_discover_tests(test_HashTable_Map)
 gtest_discover_tests(test_SkipList)
+gtest_discover_tests(test_MatrizDispersa)
